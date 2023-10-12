@@ -1,13 +1,8 @@
-from os import path
-from pathlib import Path
-from dotenv import load_dotenv
 from pydantic import BaseSettings, PostgresDsn, Field
 from logging import config as logging_config
-from src.core.logger import LOGGING
-from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from core.logger import LOGGING
+import os
 
-env_path = Path('.') / '.env'
-load_dotenv(dotenv_path=env_path)
 
 logging_config.dictConfig(LOGGING)
 
@@ -23,6 +18,9 @@ class AppSettings(BaseSettings):
     redis_port: int = ...
     elastic_host: str = Field(..., env='ELASTIC_HOST_NAME')
     elastic_port: int = Field(9200, env='ELASTIC_PORT')
+
+    class Config:
+        env_file = f"{os.path.dirname(os.path.abspath(__file__))}/../.env"
 
 
 app_settings = AppSettings()

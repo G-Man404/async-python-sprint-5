@@ -2,8 +2,8 @@ from fastapi import APIRouter
 
 from fastapi import Request
 
-from src.core.security import pwd_context
-from src.db.db import ping_database, find_user_by_name, create_user
+from core.security import pwd_context
+from db.db import ping_database, find_user_by_name, create_user
 from fastapi.responses import Response
 
 router_register = APIRouter()

@@ -1,15 +1,18 @@
 import asyncio
 import time
-from src.core.config import app_settings
+from core.config import app_settings
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.asyncio import create_async_engine
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from sqlalchemy.exc import DBAPIError
-from src.models.base import Base
-from src.core.config import db_echo_mode
-from src.models.users import Users
-from src.models.files import Files
+from sqlalchemy.sql import text
+
+from models.base import Base
+from core.config import db_echo_mode
+from models.users import Users
+from models.files import Files
+
 
 engine = create_async_engine(app_settings.database_dsn, echo=db_echo_mode, future=True)
 async_session = sessionmaker(
@@ -27,7 +30,7 @@ async def ping_database():
     async with async_session() as session:
         try:
             start_time = time.time()
-            await session.execute('SELECT 1')
+            await session.execute(text("SELECT 1"))
             end_time = time.time()
             return end_time - start_time
         except DBAPIError:
@@ -55,7 +58,7 @@ async def add_file(name: str, path: str, size: int, user: Users):
         new_file = Files(name=name, path=path, size=size, user=user, user_id=user.id, is_downloadable=True)
         session.add(new_file)
         await session.commit()
-        session.refresh(new_file)
+        await session.refresh(new_file)
         return new_file
 
 

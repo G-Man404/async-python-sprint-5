@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Depends
 from fastapi import Request
 
-from src.api.auth.base import get_current_user
-from src.db.db import get_all_user_file
-from src.models.users import Users
+from api.auth.base import get_current_user
+from db.db import get_all_user_file
+from models.users import Users
 
 router_files = APIRouter()
 

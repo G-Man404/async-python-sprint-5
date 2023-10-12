@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 
 from fastapi import Request
-from src.db.db import ping_database
+from db.db import ping_database
 router_get_ping = APIRouter()
 
 

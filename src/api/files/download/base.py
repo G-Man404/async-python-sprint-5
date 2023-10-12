@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Depends
 from fastapi.responses import FileResponse
 
-from src.api.auth.base import get_current_user
-from src.models.users import Users
-from src.db.db import get_file
+from api.auth.base import get_current_user
+from models.users import Users
+from db.db import get_file
 
 router_files_download = APIRouter()
 

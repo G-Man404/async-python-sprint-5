@@ -15,7 +15,7 @@ class Files(Base):
     size = Column(Integer())
     is_downloadable = Column(Boolean())
 
-    user_id = Column(Integer, ForeignKey("users.id"))
+    user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"))
     user = relationship("Users")
 
     __mapper_args__ = {"eager_defaults": True}

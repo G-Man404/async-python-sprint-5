@@ -22,7 +22,6 @@ async_session = sessionmaker(
 
 async def create_model():
     async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.drop_all)
         await conn.run_sync(Base.metadata.create_all)
 
 
@@ -49,7 +48,7 @@ async def create_user(name, hash_password) -> Users:
         user = Users(name=name, hash_password=hash_password)
         session.add(user)
         await session.commit()
-        session.refresh(user)
+        await session.refresh(user)
         return user
 
 
@@ -58,7 +57,6 @@ async def add_file(name: str, path: str, size: int, user: Users):
         new_file = Files(name=name, path=path, size=size, user=user, user_id=user.id, is_downloadable=True)
         session.add(new_file)
         await session.commit()
-        await session.refresh(new_file)
         return new_file
 
 

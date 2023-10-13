@@ -7,7 +7,7 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: practicum
     ports:
-      - 5432:5432
+      - 5432
   backend:
     build:
       context: .
@@ -15,6 +15,3 @@ services:
       - 8000:8000
     depends_on:
       - pg
-networks:
-  postgres:
-    driver: bridge

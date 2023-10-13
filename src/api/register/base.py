@@ -14,6 +14,5 @@ async def register(request: Request, name, password):
     user = await find_user_by_name(name)
     if user is not None:
         return Response(status_code=401)
-    else:
-        await create_user(name, pwd_context.hash(password))
-        return Response(status_code=201)
+    await create_user(name, pwd_context.hash(password))
+    return Response(status_code=201)
